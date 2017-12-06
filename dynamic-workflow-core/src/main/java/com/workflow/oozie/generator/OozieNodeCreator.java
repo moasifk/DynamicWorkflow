@@ -3,6 +3,8 @@ package com.workflow.oozie.generator;
 import java.util.Iterator;
 import java.util.List;
 
+import com.workflow.oozie.model.GlobalNodeDetails;
+import com.workflow.oozie.model.Property;
 import com.workflow.oozie.nodes.ActionNode;
 import com.workflow.oozie.nodes.ActionTransition;
 import com.workflow.oozie.nodes.Configuration;
@@ -27,15 +29,20 @@ public class OozieNodeCreator {
 	/*
 	 * Adding <global> node to workflow Here we define the configuration details
 	 */
-	public Global createGlobalNode() {
+	public Global createGlobalNode(GlobalNodeDetails globalNodeDetails) {
 		Global globalNode = oozieNodeFactory.createGlobal();
 		Configuration config = oozieNodeFactory.createConfiguration();
-		globalNode.setJobTracker(jobTracker);
-		globalNode.setNameNode(nameNode);
-		Configuration.Property prop1 = new Configuration.Property();
-		prop1.setName(GLOBAL_NODE_PROPERTY_NAME);
-		prop1.setValue(GLOBAL_NODE_PROPERTY_VALUE);
-		config.getProperty().add(prop1);
+		globalNode.setJobTracker(globalNodeDetails.getJobTracker());
+		globalNode.setNameNode(globalNodeDetails.getNameNode());
+		List<Property> globalNodeProperties = globalNodeDetails.getProperties();
+		Iterator<Property> propertyIterator = globalNodeProperties.iterator();
+		while (propertyIterator.hasNext()) {
+			Property property = propertyIterator.next();
+			Configuration.Property prop = new Configuration.Property();
+			prop.setName(property.getPropertyName());
+			prop.setValue(property.getPropertyValue());
+			config.getProperty().add(prop);
+		}
 		globalNode.setConfiguration(config);
 		return globalNode;
 	}
