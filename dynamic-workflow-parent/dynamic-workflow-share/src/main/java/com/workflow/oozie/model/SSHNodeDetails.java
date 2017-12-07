@@ -23,7 +23,7 @@ public class SSHNodeDetails {
     @Expose
     private String okToName;
     
-    @SerializedName("errorToName")
+    @SerializedName("ErrorToName")
     @Expose
     private String errorToName;
     
