@@ -16,6 +16,6 @@ public interface WorkflowGenerator {
 	 * This method will generate & return the work flow XML file.
 	 */
 
-	public void generateWorkFlow(DynamicWorkflowConfig dynamicWorkflowConfigObj) throws IOException;
+	public String generateWorkFlow(DynamicWorkflowConfig dynamicWorkflowConfigObj) throws IOException;
 
 }

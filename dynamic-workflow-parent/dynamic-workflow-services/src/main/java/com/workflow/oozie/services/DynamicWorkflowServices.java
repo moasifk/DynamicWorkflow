@@ -31,20 +31,22 @@ public class DynamicWorkflowServices {
 		logger.info("Started wfRestService:setSchedule");
 
 		DynamicWorkflowConfig dynamicWorkflowConfigObj = null;
+		String response = "";
 		if (!requestJson.equals(null)) {
 			Gson gson = new Gson();
 			dynamicWorkflowConfigObj = gson.fromJson(requestJson, DynamicWorkflowConfig.class);
 		}
 		WorkflowGenerator workflowGenerator = new DynamicWorkflowGeneratorImpl();
 		try {
-			workflowGenerator.generateWorkFlow(dynamicWorkflowConfigObj);
+			response = workflowGenerator.generateWorkFlow(dynamicWorkflowConfigObj);
+			logger.info(response);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		// String responseString = new Gson().toJson(responseJSON);
 		// return HTTP response 201 in case of success
-		return Response.status(Status.ACCEPTED).entity("").build();
+		return Response.status(Status.ACCEPTED).entity(response).build();
 	}
 
 }

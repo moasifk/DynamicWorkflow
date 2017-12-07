@@ -6,7 +6,7 @@
 		<artifactId>dynamic-workflow-parent</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
-
+	
 	<artifactId>dynamic-workflow-services</artifactId>
 	<packaging>war</packaging>
 	<name>dynamic-workflow-services</name>
@@ -16,8 +16,17 @@
 		<jersey2.version>2.19</jersey2.version>
 		<jaxrs.version>2.0.1</jaxrs.version>
 	</properties>
-
 	<dependencies>
+		<dependency>
+			<groupId>com.workflow.oozie</groupId>
+			<artifactId>dynamic-workflow-share</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>com.workflow.oozie</groupId>
+			<artifactId>dynamic-workflow-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 		<!-- JAX-RS -->
 		<dependency>
 			<groupId>javax.ws.rs</groupId>
@@ -39,11 +48,6 @@
 			<groupId>org.glassfish.jersey.core</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>${jersey2.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.workflow.oozie</groupId>
-			<artifactId>dynamic-workflow-core</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
