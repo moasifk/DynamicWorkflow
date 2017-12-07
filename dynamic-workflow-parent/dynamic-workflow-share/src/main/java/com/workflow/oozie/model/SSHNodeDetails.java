@@ -18,6 +18,15 @@ public class SSHNodeDetails {
     @SerializedName("Command")
     @Expose
     private String command;
+    
+    @SerializedName("OkToName")
+    @Expose
+    private String okToName;
+    
+    @SerializedName("errorToName")
+    @Expose
+    private String errorToName;
+    
     @SerializedName("Args")
     @Expose
     private List<Arg> args = new ArrayList<Arg>();
@@ -54,7 +63,23 @@ public class SSHNodeDetails {
         this.args = args;
     }
 
-    @Override
+	public String getOkToName() {
+		return okToName;
+	}
+
+	public void setOkToName(String okToName) {
+		this.okToName = okToName;
+	}
+
+	public String getErrorToName() {
+		return errorToName;
+	}
+
+	public void setErrorToName(String errorToName) {
+		this.errorToName = errorToName;
+	}
+	
+	 @Override
     public String toString() {
         return new ToStringBuilder(this).append("nodeName", nodeName).append("host", host).append("command", command).append("args", args).toString();
     }

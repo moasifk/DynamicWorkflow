@@ -22,7 +22,11 @@ public class DynamicWorkflowConfig {
     @SerializedName("SparkNodeDetails")
     @Expose
     private SparkNodeDetails sparkNodeDetails;
-
+    
+    @SerializedName("EndNodeName")
+    @Expose
+    private String endNodeName;
+    
     public String getStartNodeName() {
         return startNodeName;
     }
@@ -67,5 +71,13 @@ public class DynamicWorkflowConfig {
     public String toString() {
         return new ToStringBuilder(this).append("startNodeName", startNodeName).append("globalNodeDetails", globalNodeDetails).append("sSHNodeDetails", sSHNodeDetails).append("forkNodeDetails", forkNodeDetails).append("sparkNodeDetails", sparkNodeDetails).toString();
     }
+
+	public String getEndNodeName() {
+		return endNodeName;
+	}
+
+	public void setEndNodeName(String endNodeName) {
+		this.endNodeName = endNodeName;
+	}
 
 }

@@ -3,11 +3,13 @@ package com.workflow.oozie.generator;
 import java.util.Iterator;
 import java.util.List;
 
+import com.workflow.oozie.model.Arg;
 import com.workflow.oozie.model.GlobalNodeDetails;
 import com.workflow.oozie.model.Property;
 import com.workflow.oozie.nodes.ActionNode;
 import com.workflow.oozie.nodes.ActionTransition;
 import com.workflow.oozie.nodes.Configuration;
+import com.workflow.oozie.nodes.End;
 import com.workflow.oozie.nodes.Global;
 import com.workflow.oozie.nodes.OozieNodeFactory;
 import com.workflow.oozie.nodes.SSH;
@@ -46,8 +48,14 @@ public class OozieNodeCreator {
 		globalNode.setConfiguration(config);
 		return globalNode;
 	}
+	
+	public End createEndNode(String endNodeName) {
+		End endNode = oozieNodeFactory.createEnd();
+		endNode.setName(endNodeName);
+		return endNode;
+	}
 
-	public ActionNode createSSHActionNode(String actionName, String host, String command, List<String> args,
+	public ActionNode createSSHActionNode(String actionName, String host, String command, List<Arg> args,
 			String okayNodeName, String errorNodeName) {
 		ActionNode action = oozieNodeFactory.createActionNode();
 		action.setName(actionName);
@@ -55,9 +63,11 @@ public class OozieNodeCreator {
 		sshAction.setXmlns("uri:oozie:ssh-action:0.2");
 		sshAction.setHost(host);
 		sshAction.setCommand(command);
-		Iterator<String> argsItr = args.iterator();
+		Iterator<Arg> argsItr = args.iterator();
+		Arg argument = null;
 		while (argsItr.hasNext()) {
-			sshAction.getArg().add(argsItr.next());
+			argument = argsItr.next();
+			sshAction.getArg().add(argument.getArg());
 		}
 		action.setSsh(sshAction);
 		setOkTransition(action, okayNodeName);
