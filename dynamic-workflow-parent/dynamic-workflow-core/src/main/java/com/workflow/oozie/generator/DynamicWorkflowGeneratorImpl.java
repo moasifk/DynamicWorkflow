@@ -11,6 +11,7 @@ import javax.xml.namespace.QName;
 import org.apache.log4j.Logger;
 
 import com.workflow.oozie.model.DynamicWorkflowConfig;
+import com.workflow.oozie.model.JavaNodeDetails;
 import com.workflow.oozie.model.SSHNodeDetails;
 import com.workflow.oozie.model.SparkNodeDetails;
 import com.workflow.oozie.nodes.ActionNode;
@@ -58,6 +59,14 @@ public class DynamicWorkflowGeneratorImpl implements WorkflowGenerator {
 				SSHNodeDetails sshNodeDetails = dynamicWorkflowConfigObj.getSSHNodeDetails();
 				workFlowApp.getDecisionOrForkOrJoin().add(nodeCreator.createSSHActionNode(sshNodeDetails.getNodeName(),
 						sshNodeDetails.getHost(), sshNodeDetails.getCommand(), sshNodeDetails.getArgs(), sshNodeDetails.getOkToName(), sshNodeDetails.getErrorToName()));
+			}
+			// Adding Java action node details
+			if (dynamicWorkflowConfigObj.getJavaNodeDetails() != null) {
+				JavaNodeDetails javaNodeDetails = dynamicWorkflowConfigObj.getJavaNodeDetails();
+				workFlowApp.getDecisionOrForkOrJoin().add(nodeCreator.createJavaActionNode(javaNodeDetails.getNodeName(), 
+						javaNodeDetails.getJobTracker(), javaNodeDetails.getNameNode(), javaNodeDetails.getPrepareNode(),
+						javaNodeDetails.getJobXML(), javaNodeDetails.getConfigProperties(), javaNodeDetails.getMainClass(),
+						javaNodeDetails.getArgs(), javaNodeDetails.getOkayToName(), javaNodeDetails.getErrorToName()));
 			}
 			
 			// Adding Spark action node details

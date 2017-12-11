@@ -60,6 +60,38 @@
     "OkayToName": "ok-name",
     "ErrorToName": "error-to-name"
   },
+  "JavaNodeDetails": {
+	"NodeName": "java-node-name",
+	"JobTracker": "job-tracker",
+	"NameNode": "name-node",
+	"JobXML": "jobXML.xml",
+	"PrepareNode": {
+		"DeleteArgs":[{"Path":"delete-path1"},{"Path":"delete-path2"}],
+		"MkdirArgs":[{"Path":"mkdir-path1"},{"Path":"mkdir-path2"}]
+	},
+	"ConfigurationProperties": [
+      {
+        "PropertyName": "property-name1",
+        "PropertyValue": "property-value1"
+      },
+      {
+        "PropertyName": "property-name2",
+        "PropertyValue": "property-value2"
+      }
+    ],
+	"MainClass": "MainClass.class",
+	"JavaOpts": "java-opts",
+	"Args": [
+      {
+        "Arg": "spark-arg-1"
+      },
+      {
+        "Arg": "spark-arg-2"
+      }
+    ],
+	"OkayToName": "ok-name",
+    "ErrorToName": "error-to-name"
+  },
   "EndNodeName": "end-node",
   "KillNodeDetails": {
 	"KillNodeName": "kill-node",

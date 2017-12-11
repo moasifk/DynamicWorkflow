@@ -20,7 +20,7 @@ public class GlobalNodeDetails {
     private String nameNode;
     @SerializedName("Properties")
     @Expose
-    private List<Property> properties = new ArrayList<Property>();
+    private List<ConfigurationProperties> properties = new ArrayList<ConfigurationProperties>();
 
     public String getGlobalNodeName() {
         return globalNodeName;
@@ -46,11 +46,11 @@ public class GlobalNodeDetails {
         this.nameNode = nameNode;
     }
 
-    public List<Property> getProperties() {
+    public List<ConfigurationProperties> getConfigProperties() {
         return properties;
     }
 
-    public void setProperties(List<Property> properties) {
+    public void setConfigProperties(List<ConfigurationProperties> properties) {
         this.properties = properties;
     }
 

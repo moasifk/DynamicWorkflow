@@ -27,6 +27,10 @@ public class DynamicWorkflowConfig {
     @Expose
     private SparkNodeDetails sparkNodeDetails;
     
+    @SerializedName("JavaNodeDetails")
+    @Expose
+    private JavaNodeDetails javaNodeDetails;
+    
     @SerializedName("EndNodeName")
     @Expose
     private String endNodeName;
@@ -102,6 +106,14 @@ public class DynamicWorkflowConfig {
 
 	public void setWorkflowName(String workflowName) {
 		this.workflowName = workflowName;
+	}
+
+	public JavaNodeDetails getJavaNodeDetails() {
+		return javaNodeDetails;
+	}
+
+	public void setJavaNodeDetails(JavaNodeDetails javaNodeDetails) {
+		this.javaNodeDetails = javaNodeDetails;
 	}
 
 }
