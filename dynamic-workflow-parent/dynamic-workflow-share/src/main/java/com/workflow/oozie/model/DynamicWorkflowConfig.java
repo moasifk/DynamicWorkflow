@@ -6,7 +6,11 @@ import com.google.gson.annotations.SerializedName;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class DynamicWorkflowConfig {
-
+	
+	@SerializedName("WorkflowName")
+    @Expose
+    private String workflowName;
+	
     @SerializedName("StartNodeName")
     @Expose
     private String startNodeName;
@@ -26,6 +30,10 @@ public class DynamicWorkflowConfig {
     @SerializedName("EndNodeName")
     @Expose
     private String endNodeName;
+    
+    @SerializedName("KillNodeDetails")
+    @Expose
+    private KillNodeDetails killNodeDetails;
     
     public String getStartNodeName() {
         return startNodeName;
@@ -78,6 +86,22 @@ public class DynamicWorkflowConfig {
 
 	public void setEndNodeName(String endNodeName) {
 		this.endNodeName = endNodeName;
+	}
+
+	public KillNodeDetails getKillNodeDetails() {
+		return killNodeDetails;
+	}
+
+	public void setKillNodeDetails(KillNodeDetails killNodeDetails) {
+		this.killNodeDetails = killNodeDetails;
+	}
+
+	public String getWorkflowName() {
+		return workflowName;
+	}
+
+	public void setWorkflowName(String workflowName) {
+		this.workflowName = workflowName;
 	}
 
 }

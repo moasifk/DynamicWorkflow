@@ -37,12 +37,7 @@ public class DynamicWorkflowServices {
 			dynamicWorkflowConfigObj = gson.fromJson(requestJson, DynamicWorkflowConfig.class);
 		}
 		WorkflowGenerator workflowGenerator = new DynamicWorkflowGeneratorImpl();
-		try {
-			response = workflowGenerator.generateWorkFlow(dynamicWorkflowConfigObj);
-			logger.info(response);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		response = workflowGenerator.generateWorkFlow(dynamicWorkflowConfigObj);
 
 		// String responseString = new Gson().toJson(responseJSON);
 		// return HTTP response 201 in case of success
