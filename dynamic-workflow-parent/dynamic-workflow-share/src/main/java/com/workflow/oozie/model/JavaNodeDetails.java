@@ -23,9 +23,9 @@ public class JavaNodeDetails {
     @SerializedName("PrepareNode")
     @Expose
     private PrepareNode prepareNode;
-    @SerializedName("Properties")
+    @SerializedName("ConfigurationProperties")
     @Expose
-    private List<ConfigurationProperties> properties = new ArrayList<ConfigurationProperties>();
+    private List<ConfigurationProperties> configurationProperties = new ArrayList<ConfigurationProperties>();
     @SerializedName("MainClass")
     @Expose
     private String mainClass;
@@ -82,14 +82,6 @@ public class JavaNodeDetails {
         this.prepareNode = prepareNode;
     }
 
-    public List<ConfigurationProperties> getConfigProperties() {
-        return properties;
-    }
-
-    public void setConfigProperties(List<ConfigurationProperties> properties) {
-        this.properties = properties;
-    }
-
     public String getMainClass() {
         return mainClass;
     }
@@ -129,5 +121,13 @@ public class JavaNodeDetails {
     public void setErrorToName(String errorToName) {
         this.errorToName = errorToName;
     }
+
+	public List<ConfigurationProperties> getConfigurationProperties() {
+		return configurationProperties;
+	}
+
+	public void setConfigurationProperties(List<ConfigurationProperties> configurationProperties) {
+		this.configurationProperties = configurationProperties;
+	}
 
 }

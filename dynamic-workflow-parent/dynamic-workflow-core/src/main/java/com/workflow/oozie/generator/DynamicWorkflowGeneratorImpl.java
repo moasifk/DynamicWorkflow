@@ -65,7 +65,7 @@ public class DynamicWorkflowGeneratorImpl implements WorkflowGenerator {
 				JavaNodeDetails javaNodeDetails = dynamicWorkflowConfigObj.getJavaNodeDetails();
 				workFlowApp.getDecisionOrForkOrJoin().add(nodeCreator.createJavaActionNode(javaNodeDetails.getNodeName(), 
 						javaNodeDetails.getJobTracker(), javaNodeDetails.getNameNode(), javaNodeDetails.getPrepareNode(),
-						javaNodeDetails.getJobXML(), javaNodeDetails.getConfigProperties(), javaNodeDetails.getMainClass(),
+						javaNodeDetails.getJobXML(), javaNodeDetails.getConfigurationProperties(), javaNodeDetails.getMainClass(),
 						javaNodeDetails.getArgs(), javaNodeDetails.getOkayToName(), javaNodeDetails.getErrorToName()));
 			}
 			

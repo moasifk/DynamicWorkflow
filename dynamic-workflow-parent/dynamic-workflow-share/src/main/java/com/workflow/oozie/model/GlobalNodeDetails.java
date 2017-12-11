@@ -18,7 +18,7 @@ public class GlobalNodeDetails {
     @SerializedName("NameNode")
     @Expose
     private String nameNode;
-    @SerializedName("Properties")
+    @SerializedName("ConfigurationProperties")
     @Expose
     private List<ConfigurationProperties> properties = new ArrayList<ConfigurationProperties>();
 

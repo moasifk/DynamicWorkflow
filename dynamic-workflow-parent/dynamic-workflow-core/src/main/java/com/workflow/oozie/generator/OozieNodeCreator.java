@@ -12,6 +12,7 @@ import com.workflow.oozie.model.PrepareNode;
 import com.workflow.oozie.nodes.ActionNode;
 import com.workflow.oozie.nodes.ActionTransition;
 import com.workflow.oozie.nodes.Configuration;
+import com.workflow.oozie.nodes.Configuration.Property;
 import com.workflow.oozie.nodes.Delete;
 import com.workflow.oozie.nodes.End;
 import com.workflow.oozie.nodes.Global;
@@ -193,21 +194,19 @@ public class OozieNodeCreator {
 	public ActionNode createJavaActionNode(String actionNodeName, String jobTracker, String nameNode,
 			PrepareNode prepareNode, String jobXml, List<ConfigurationProperties> configProperties,
 			String mainClass, List<Arg> args, String okayNodeName, String errorNodeName) {
+		
 		ActionNode action = oozieNodeFactory.createActionNode();
 		action.setName(actionNodeName);
 		JavaAction javaAction = oozieNodeFactory.createJavaAction();
-		javaAction.setJobTracker(jobTracker);
-		javaAction.setNameNode(nameNode);
-		Iterator<DeleteArg> deletArgsItr = prepareNode.getDeleteArgs().iterator();
-		Prepare prepare = new Prepare();
 		
+		Iterator<DeleteArg> deletArgsItr = prepareNode.getDeleteArgs().iterator();
+		Prepare prepare = oozieNodeFactory.createPrepare();
 		while (deletArgsItr.hasNext()) {
 			DeleteArg arg = deletArgsItr.next();
 			Delete delete = new Delete();
 			delete.setPath(arg.getPath());
 			prepare.getDelete().add(delete);
 		}
-		
 		Iterator<MkdirArg> mkdirArgsItr = prepareNode.getMkdirArgs().iterator();
 		while (mkdirArgsItr.hasNext()) {
 			MkdirArg arg = mkdirArgsItr.next();
@@ -215,7 +214,25 @@ public class OozieNodeCreator {
 			mkdir.setPath(arg.getPath());
 			prepare.getMkdir().add(mkdir);
 		}
+		Iterator<ConfigurationProperties> configPropertiesItr = configProperties.iterator();
+		Configuration config = oozieNodeFactory.createConfiguration();
+		while (configPropertiesItr.hasNext()) {
+			ConfigurationProperties property = configPropertiesItr.next();
+			Property prop = oozieNodeFactory.createConfigurationProperty();
+			prop.setName(property.getPropertyName());
+			prop.setValue(property.getPropertyValue());
+			config.getProperty().add(prop);
+		}
+		Iterator<Arg> argsItr = args.iterator();
+		while (argsItr.hasNext()) {
+			Arg arg = argsItr.next();
+			javaAction.getArg().add(arg.getArg());
+		}
 		
+		javaAction.setJobTracker(jobTracker);
+		javaAction.setNameNode(nameNode);
+		javaAction.setConfiguration(config);
+		javaAction.setPrepare(prepare);
 		javaAction.setMainClass(mainClass);
 		setOkTransition(action, okayNodeName);
 		setErrorTransition(action, errorNodeName);
