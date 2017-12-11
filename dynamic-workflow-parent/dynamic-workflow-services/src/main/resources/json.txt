@@ -5,7 +5,7 @@
     "GlobalNodeName": "global-node",
     "JobTracker": "job-tracker",
     "NameNode": "name-node",
-    "Properties": [
+    "ConfigurationProperties": [
       {
         "PropertyName": "property-name1",
         "PropertyValue": "property-value1"
@@ -92,8 +92,10 @@
 	"OkayToName": "ok-name",
     "ErrorToName": "error-to-name"
   },
+  
   "EndNodeName": "end-node",
-  "KillNodeDetails": {
+  
+   "KillNodeDetails": {
 	"KillNodeName": "kill-node",
 	"KillNodeMessage": "Error-message"
   }
