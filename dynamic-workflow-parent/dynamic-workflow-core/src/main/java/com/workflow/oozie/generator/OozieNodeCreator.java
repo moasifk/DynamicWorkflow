@@ -1,5 +1,6 @@
 package com.workflow.oozie.generator;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.Iterator;
 import java.util.List;
 
@@ -94,8 +95,8 @@ public class OozieNodeCreator {
 	}
 
 	public ActionNode createSparkActionNode(String actionNodeName, String jobTracker, String nameNode, String master,
-			String mode, String applicationName, String mainClass, List<String> inputPathList, String nextActionName,
-			String jarName, List<String> args, String okayNodeName, String errorNodeName) {
+			String mode, String applicationName, String mainClass, String jarName,
+			List<Arg> args, String okayNodeName, String errorNodeName) {
 
 		ActionNode action = oozieNodeFactory.createActionNode();
 		action.setName(actionNodeName);
@@ -109,14 +110,10 @@ public class OozieNodeCreator {
 		sparkAction.setClazz(mainClass);
 		sparkAction.setJar(jarName);
 		sparkAction.setSparkOpts(setSparkOptions());
-		Iterator<String> argsItr = args.iterator();
+		Iterator<Arg> argsItr = args.iterator();
 		while (argsItr.hasNext()) {
-			sparkAction.getArg().add(argsItr.next());
-		}
-
-		Iterator<String> listItr = inputPathList.iterator();
-		while (listItr.hasNext()) {
-			sparkAction.getArg().add(listItr.next());
+			Arg arg = argsItr.next();
+			sparkAction.getArg().add(arg.getArg());
 		}
 
 		setOkTransition(action, okayNodeName);

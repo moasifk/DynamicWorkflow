@@ -24,9 +24,9 @@ public class SparkNodeDetails {
     @SerializedName("Mode")
     @Expose
     private String mode;
-    @SerializedName("Name")
+    @SerializedName("ApplicationName")
     @Expose
-    private String name;
+    private String applicationName;
     @SerializedName("Jar")
     @Expose
     private String jar;
@@ -42,6 +42,9 @@ public class SparkNodeDetails {
     @SerializedName("ErrorToName")
     @Expose
     private String errorToName;
+    @SerializedName("ClassName")
+    @Expose
+    private String className;
 
     public String getNodeName() {
         return nodeName;
@@ -81,14 +84,6 @@ public class SparkNodeDetails {
 
     public void setMode(String mode) {
         this.mode = mode;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getJar() {
@@ -133,7 +128,23 @@ public class SparkNodeDetails {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("nodeName", nodeName).append("jobTracker", jobTracker).append("nameNode", nameNode).append("master", master).append("mode", mode).append("name", name).append("jar", jar).append("sparkOpts", sparkOpts).append("args", args).append("okayToName", okayToName).append("errorToName", errorToName).toString();
+        return new ToStringBuilder(this).append("nodeName", nodeName).append("jobTracker", jobTracker).append("nameNode", nameNode).append("master", master).append("mode", mode).append("name", applicationName).append("jar", jar).append("sparkOpts", sparkOpts).append("args", args).append("okayToName", okayToName).append("errorToName", errorToName).toString();
     }
+
+	public String getApplicationName() {
+		return applicationName;
+	}
+
+	public void setApplicationName(String applicationName) {
+		this.applicationName = applicationName;
+	}
+
+	public String getClassName() {
+		return className;
+	}
+
+	public void setClassName(String className) {
+		this.className = className;
+	}
 
 }

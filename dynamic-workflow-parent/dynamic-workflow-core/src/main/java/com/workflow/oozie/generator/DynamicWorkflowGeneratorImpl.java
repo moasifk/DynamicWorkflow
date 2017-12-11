@@ -11,6 +11,7 @@ import javax.xml.namespace.QName;
 
 import com.workflow.oozie.model.DynamicWorkflowConfig;
 import com.workflow.oozie.model.SSHNodeDetails;
+import com.workflow.oozie.model.SparkNodeDetails;
 import com.workflow.oozie.nodes.ActionNode;
 import com.workflow.oozie.nodes.OozieNodeFactory;
 import com.workflow.oozie.nodes.WorkFlowApp;
@@ -33,8 +34,7 @@ public class DynamicWorkflowGeneratorImpl implements WorkflowGenerator {
 			
 			// Adding global node details 
 			if (dynamicWorkflowConfigObj.getGlobalNodeDetails() != null) {
-				workFlowApp.getDecisionOrForkOrJoin()
-						.add(nodeCreator.createGlobalNode(dynamicWorkflowConfigObj.getGlobalNodeDetails()));
+				workFlowApp.setGlobal(nodeCreator.createGlobalNode(dynamicWorkflowConfigObj.getGlobalNodeDetails()));
 			}
 			
 			if (dynamicWorkflowConfigObj.getSSHNodeDetails() != null) {
@@ -42,14 +42,17 @@ public class DynamicWorkflowGeneratorImpl implements WorkflowGenerator {
 				workFlowApp.getDecisionOrForkOrJoin().add(nodeCreator.createSSHActionNode(sshNodeDetails.getNodeName(),
 						sshNodeDetails.getHost(), sshNodeDetails.getCommand(), sshNodeDetails.getArgs(), sshNodeDetails.getOkToName(), sshNodeDetails.getErrorToName()));
 			}
-
-			// workFlowApp.getDecisionOrForkOrJoin().add(nodeCreator.createSparkActionNode(actionNodeName,
-			// jobTracker, nameNode, master, mode, applicationName, mainClass,
-			// inputPathList, nextActionName, jarName, args, okayNodeName,
-			// errorNodeName))
+			
+			if (dynamicWorkflowConfigObj.getSparkNodeDetails() != null) {
+				SparkNodeDetails sparkNodeDetails = dynamicWorkflowConfigObj.getSparkNodeDetails();
+				workFlowApp.getDecisionOrForkOrJoin().add(nodeCreator.createSparkActionNode(sparkNodeDetails.getNodeName(),
+						sparkNodeDetails.getJobTracker(), sparkNodeDetails.getNameNode(), sparkNodeDetails.getMaster(), sparkNodeDetails.getMode(),
+						sparkNodeDetails.getApplicationName(), sparkNodeDetails.getClassName(), sparkNodeDetails.getJar(), sparkNodeDetails.getArgs(), sparkNodeDetails.getOkayToName(),
+						sparkNodeDetails.getErrorToName()));
+			}
 			
 			// Adding End node details to workflow.xml
-						workFlowApp.getDecisionOrForkOrJoin().add(nodeCreator.createEndNode(dynamicWorkflowConfigObj.getEndNodeName()));
+			workFlowApp.setEnd(nodeCreator.createEndNode(dynamicWorkflowConfigObj.getEndNodeName()));
 						
 			try {
 				JAXBContext jc = JAXBContext.newInstance(WorkFlowApp.class, ActionNode.class);
