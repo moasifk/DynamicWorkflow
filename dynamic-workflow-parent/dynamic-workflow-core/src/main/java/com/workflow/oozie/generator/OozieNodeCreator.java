@@ -12,6 +12,7 @@ import com.workflow.oozie.nodes.ActionTransition;
 import com.workflow.oozie.nodes.Configuration;
 import com.workflow.oozie.nodes.End;
 import com.workflow.oozie.nodes.Global;
+import com.workflow.oozie.nodes.Kill;
 import com.workflow.oozie.nodes.OozieNodeFactory;
 import com.workflow.oozie.nodes.SSH;
 import com.workflow.oozie.nodes.Spark;
@@ -54,6 +55,13 @@ public class OozieNodeCreator {
 		End endNode = oozieNodeFactory.createEnd();
 		endNode.setName(endNodeName);
 		return endNode;
+	}
+	
+	public Kill createKillNode(String killNodeName, String killMessage) {
+		Kill killNode = oozieNodeFactory.createKill();
+		killNode.setName(killNodeName);
+		killNode.setMessage(killMessage);
+		return killNode;
 	}
 
 	public ActionNode createSSHActionNode(String actionName, String host, String command, List<Arg> args,
