@@ -44,7 +44,8 @@
     "NameNode": "name-node",
     "Master": "master",
     "Mode": "mode",
-    "Name": "name",
+    "ApplicationName": "name",
+	"ClassName": "Application.class",
     "Jar": "jar-name",
     "SparkOpts": "spark-opts",
     "Args": [
@@ -58,8 +59,6 @@
     "OkayToName": "ok-name",
     "ErrorToName": "error-to-name"
   },
-  "EndNodeDetails": {
-	"NodeName": "end-node"
-  }
+  "EndNodeName": "end-node"
   
 }
