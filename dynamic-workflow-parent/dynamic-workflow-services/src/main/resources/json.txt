@@ -1,0 +1,107 @@
+{
+  "WorkflowName": "my-workflow",
+  "StartNodeName": "StartName",
+  "GlobalNodeDetails": {
+    "GlobalNodeName": "global-node",
+    "JobTracker": "job-tracker",
+    "NameNode": "name-node",
+    "ConfigurationProperties": [
+      {
+        "PropertyName": "property-name1",
+        "PropertyValue": "property-value1"
+      },
+      {
+        "PropertyName": "property-name2",
+        "PropertyValue": "property-value2"
+      }
+    ]
+  },
+  "SSHNodeDetails": {
+    "NodeName": "ssh-node-name",
+    "Host": "ssh-host",
+    "Command": "ssh-command",
+	"OkToName": "ok-to-name",
+	"ErrorToName": "error-to-name",
+    "Args": [
+      {
+        "Arg": "ssh-arg-1"
+      },
+      {
+        "Arg": "ssh-arg-2"
+      }
+    ]
+  },
+  "ForkNodeDetails": {
+    "NodeName": "fork-node-name",
+    "ForkPaths": [
+      {
+        "Path": "path-to-2"
+      }
+    ]
+  },
+  "JoinNodeDetails": {
+    "NodeName": "join-node-name",
+    "JoinToName": "join-to-node-name"
+  },
+  "SparkNodeDetails": {
+    "NodeName": "spark-node-name",
+    "JobTracker": "job-tracker",
+    "NameNode": "name-node",
+    "Master": "master",
+    "Mode": "mode",
+    "ApplicationName": "name",
+	"ClassName": "Application.class",
+    "Jar": "jar-name",
+    "SparkOpts": "spark-opts",
+    "Args": [
+      {
+        "Arg": "spark-arg-1"
+      },
+      {
+        "Arg": "spark-arg-2"
+      }
+    ],
+    "OkayToName": "ok-name",
+    "ErrorToName": "error-to-name"
+  },
+  "JavaNodeDetails": {
+	"NodeName": "java-node-name",
+	"JobTracker": "job-tracker",
+	"NameNode": "name-node",
+	"JobXML": "jobXML.xml",
+	"PrepareNode": {
+		"DeleteArgs":[{"Path":"delete-path1"},{"Path":"delete-path2"}],
+		"MkdirArgs":[{"Path":"mkdir-path1"},{"Path":"mkdir-path2"}]
+	},
+	"ConfigurationProperties": [
+      {
+        "PropertyName": "property-name1",
+        "PropertyValue": "property-value1"
+      },
+      {
+        "PropertyName": "property-name2",
+        "PropertyValue": "property-value2"
+      }
+    ],
+	"MainClass": "MainClass.class",
+	"JavaOpts": "java-opts",
+	"Args": [
+      {
+        "Arg": "spark-arg-1"
+      },
+      {
+        "Arg": "spark-arg-2"
+      }
+    ],
+	"OkayToName": "ok-name",
+    "ErrorToName": "error-to-name"
+  },
+  
+  "EndNodeName": "end-node",
+  
+   "KillNodeDetails": {
+	"KillNodeName": "kill-node",
+	"KillNodeMessage": "Error-message"
+  }
+  
+}

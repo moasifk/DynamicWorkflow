@@ -1,0 +1,17 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.workflow</groupId>
+		<artifactId>dynamic-workflow</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<groupId>com.workflow.oozie</groupId>
+	<artifactId>dynamic-workflow-parent</artifactId>
+	<packaging>pom</packaging>
+	<modules>
+		<module>dynamic-workflow-share</module>
+		<module>dynamic-workflow-core</module>
+		<module>dynamic-workflow-services</module>
+	</modules>
+</project>
