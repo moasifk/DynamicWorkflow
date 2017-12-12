@@ -6,6 +6,7 @@ import java.util.List;
 import com.workflow.oozie.model.Arg;
 import com.workflow.oozie.model.ConfigurationProperties;
 import com.workflow.oozie.model.DeleteArg;
+import com.workflow.oozie.model.ForkPath;
 import com.workflow.oozie.model.GlobalNodeDetails;
 import com.workflow.oozie.model.MkdirArg;
 import com.workflow.oozie.model.PrepareNode;
@@ -15,8 +16,11 @@ import com.workflow.oozie.nodes.Configuration;
 import com.workflow.oozie.nodes.Configuration.Property;
 import com.workflow.oozie.nodes.Delete;
 import com.workflow.oozie.nodes.End;
+import com.workflow.oozie.nodes.Fork;
+import com.workflow.oozie.nodes.ForkTransition;
 import com.workflow.oozie.nodes.Global;
 import com.workflow.oozie.nodes.JavaAction;
+import com.workflow.oozie.nodes.Join;
 import com.workflow.oozie.nodes.Kill;
 import com.workflow.oozie.nodes.Mkdir;
 import com.workflow.oozie.nodes.OozieNodeFactory;
@@ -105,36 +109,19 @@ public class OozieNodeCreator {
 			sshAction.getArg().add(argument.getArg());
 		}
 		action.setSsh(sshAction);
-		setOkTransition(action, okayNodeName);
-		setErrorTransition(action, errorNodeName);
+		action.setOk(createActionTransition(okayNodeName));
+		action.setError(createActionTransition(errorNodeName));
 		return action;
 	}
 
 	/**
-	 * @param act
+	 * This is for creating OkayTo and ErrorTo action transitions
 	 * @param nodeName
 	 */
-	private void setOkTransition(ActionNode act, String nodeName) {
-
-		if (act != null) {
-			ActionTransition okCallWfTrans = oozieNodeFactory.createActionTransition();
-			okCallWfTrans.setTo(nodeName);
-			act.setOk(okCallWfTrans);
-		}
-	}
-
-	/**
-	 * This is for creating the error transition from one action to its error node
-	 * @param act
-	 * @param nodeName
-	 */
-	private void setErrorTransition(ActionNode act, String nodeName) {
-
-		if (act != null) {
-			ActionTransition errorCallWfTrans = oozieNodeFactory.createActionTransition();
-			errorCallWfTrans.setTo(nodeName);
-			act.setError(errorCallWfTrans);
-		}
+	private ActionTransition createActionTransition(String nodeName) {
+		ActionTransition actionTransition = oozieNodeFactory.createActionTransition();
+		actionTransition.setTo(nodeName);
+		return actionTransition;
 	}
 
 	/**
@@ -173,9 +160,9 @@ public class OozieNodeCreator {
 			Arg arg = argsItr.next();
 			sparkAction.getArg().add(arg.getArg());
 		}
-
-		setOkTransition(action, okayNodeName);
-		setErrorTransition(action, errorNodeName);
+		
+		action.setOk(createActionTransition(okayNodeName));
+		action.setError(createActionTransition(errorNodeName));
 		action.setSpark(sparkAction);
 		return action;
 	}
@@ -191,6 +178,20 @@ public class OozieNodeCreator {
 		return sparkOpts;
 	}
 	
+	/**
+	 * This is for creating the Java action node
+	 * @param actionNodeName
+	 * @param jobTracker
+	 * @param nameNode
+	 * @param prepareNode
+	 * @param jobXml
+	 * @param configProperties
+	 * @param mainClass
+	 * @param args
+	 * @param okayNodeName
+	 * @param errorNodeName
+	 * @return ActionNode
+	 */
 	public ActionNode createJavaActionNode(String actionNodeName, String jobTracker, String nameNode,
 			PrepareNode prepareNode, String jobXml, List<ConfigurationProperties> configProperties,
 			String mainClass, List<Arg> args, String okayNodeName, String errorNodeName) {
@@ -234,10 +235,42 @@ public class OozieNodeCreator {
 		javaAction.setConfiguration(config);
 		javaAction.setPrepare(prepare);
 		javaAction.setMainClass(mainClass);
-		setOkTransition(action, okayNodeName);
-		setErrorTransition(action, errorNodeName);
+		action.setOk(createActionTransition(okayNodeName));
+		action.setError(createActionTransition(errorNodeName));
 		action.setJava(javaAction);
 		return action;
+	}
+	
+	/**
+	 * This method is to create ForkActionNode
+	 * @param forkNodeName
+	 * @param forkPaths
+	 * @return Fork
+	 */
+	public Fork createForkActionNode(String forkNodeName, List<ForkPath> forkPaths) {
+		Fork fork = oozieNodeFactory.createFork();
+		fork.setName(forkNodeName);
+		Iterator<ForkPath> forkPathsItr = forkPaths.iterator();
+		while (forkPathsItr.hasNext()) {
+			ForkPath path = forkPathsItr.next();
+			ForkTransition forkTransition = oozieNodeFactory.createForkTransition();
+			forkTransition.setStart(path.getPath());
+			fork.getPath().add(forkTransition);
+		}
+		return fork;
+	}
+	
+	/**
+	 * This is to create Join action node
+	 * @param joinNodeName
+	 * @param joinToName
+	 * @return Join
+	 */
+	public Join createJoinActionNode(String joinNodeName, String joinToName) {
+		Join join = oozieNodeFactory.createJoin();
+		join.setName(joinNodeName);
+		join.setTo(joinToName);
+		return join;
 	}
 
 }

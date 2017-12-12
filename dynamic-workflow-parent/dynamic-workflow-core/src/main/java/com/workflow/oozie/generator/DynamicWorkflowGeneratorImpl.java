@@ -11,10 +11,13 @@ import javax.xml.namespace.QName;
 import org.apache.log4j.Logger;
 
 import com.workflow.oozie.model.DynamicWorkflowConfig;
+import com.workflow.oozie.model.ForkNodeDetails;
 import com.workflow.oozie.model.JavaNodeDetails;
+import com.workflow.oozie.model.JoinNodeDetails;
 import com.workflow.oozie.model.SSHNodeDetails;
 import com.workflow.oozie.model.SparkNodeDetails;
 import com.workflow.oozie.nodes.ActionNode;
+import com.workflow.oozie.nodes.Fork;
 import com.workflow.oozie.nodes.OozieNodeFactory;
 import com.workflow.oozie.nodes.WorkFlowApp;
 
@@ -76,6 +79,18 @@ public class DynamicWorkflowGeneratorImpl implements WorkflowGenerator {
 						sparkNodeDetails.getJobTracker(), sparkNodeDetails.getNameNode(), sparkNodeDetails.getMaster(), sparkNodeDetails.getMode(),
 						sparkNodeDetails.getApplicationName(), sparkNodeDetails.getClassName(), sparkNodeDetails.getJar(), sparkNodeDetails.getArgs(), sparkNodeDetails.getOkayToName(),
 						sparkNodeDetails.getErrorToName()));
+			}
+			
+			// Adding Fork node to the workflow
+			if (dynamicWorkflowConfigObj.getForkNodeDetails() != null) {
+				ForkNodeDetails forkNode = dynamicWorkflowConfigObj.getForkNodeDetails();
+				workFlowApp.getDecisionOrForkOrJoin().add(nodeCreator.createForkActionNode(forkNode.getNodeName(), forkNode.getForkPaths()));
+			}
+			
+			// Adding Join node to the workflow
+			if (dynamicWorkflowConfigObj.getJoinNodeDetails() != null) {
+				JoinNodeDetails joinNode = dynamicWorkflowConfigObj.getJoinNodeDetails();
+				workFlowApp.getDecisionOrForkOrJoin().add(nodeCreator.createJoinActionNode(joinNode.getNodeName(), joinNode.getJoinToName()));
 			}
 			
 			// Adding End node details to workflow.xml

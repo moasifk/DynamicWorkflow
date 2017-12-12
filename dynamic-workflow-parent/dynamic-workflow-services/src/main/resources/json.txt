@@ -39,6 +39,10 @@
       }
     ]
   },
+  "JoinNodeDetails": {
+    "NodeName": "join-node-name",
+    "JoinToName": "join-to-node-name"
+  },
   "SparkNodeDetails": {
     "NodeName": "spark-node-name",
     "JobTracker": "job-tracker",

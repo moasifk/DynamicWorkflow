@@ -23,6 +23,11 @@ public class DynamicWorkflowConfig {
     @SerializedName("ForkNodeDetails")
     @Expose
     private ForkNodeDetails forkNodeDetails;
+    
+    @SerializedName("JoinNodeDetails")
+    @Expose
+    private JoinNodeDetails joinNodeDetails;
+    
     @SerializedName("SparkNodeDetails")
     @Expose
     private SparkNodeDetails sparkNodeDetails;
@@ -114,6 +119,14 @@ public class DynamicWorkflowConfig {
 
 	public void setJavaNodeDetails(JavaNodeDetails javaNodeDetails) {
 		this.javaNodeDetails = javaNodeDetails;
+	}
+
+	public JoinNodeDetails getJoinNodeDetails() {
+		return joinNodeDetails;
+	}
+
+	public void setJoinNodeDetails(JoinNodeDetails joinNodeDetails) {
+		this.joinNodeDetails = joinNodeDetails;
 	}
 
 }
