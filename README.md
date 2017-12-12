@@ -1,4 +1,8 @@
-# DynamicWorkflowGenerator
+<!--
+Title: Oozie dynamic workflow
+Description:  This is tool for generating oozie workflow dynamically
+-->
+# Oozie Dynamic Workflow Generator
 Dynamic workflow generator is a tool to generate oozie workflows dynamically based on an input json.
 There are mainly 3 components for this.
 
